@@ -1,0 +1,19 @@
+[project]
+name = "flowdesk-backend"
+version = "0.1.0"
+description = "FlowDesk backend — fase 1"
+requires-python = ">=3.11"
+
+[project.dependencies]
+# vuoto per ora, si popolerà dalla fase 2 con fastapi, sqlalchemy ecc.
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
