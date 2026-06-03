@@ -10,7 +10,7 @@ class Note:
     # by the @dataclass decorator
     title: str
     body: str = ""
-    tags: list = field(default_factory=list)
+    tags: list[str] = field(default_factory=list[str])
 
     # Dynamic starting value, shouldn't be included in the __init__ as an agument
     # populated by the default_factory for every class instance
