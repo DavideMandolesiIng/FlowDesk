@@ -35,15 +35,15 @@ class Task:
     completionDate: Optional[date] = field(init=False, default=None)
     
 
-    def updateStatus(self, newStatus):
+    def updateStatus(self, newStatus: Status) -> None:
         self.status = newStatus
         if newStatus == Status.COMPLETED:
             self.completionDate = datetime.now()
 
-    def updatePriority(self, newPriority):
+    def updatePriority(self, newPriority: Priority) -> None:
         self.priority=newPriority
 
-    def __str__(self):
+    def __str__(self) -> str:
         '''should be readable by the user'''
         return (
             f"Task '{self.title}' "

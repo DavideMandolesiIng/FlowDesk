@@ -17,23 +17,23 @@ class Note:
     updatedAt: datetime = field(init=False, default_factory=datetime.now)
     
 
-    def updateTitle(self, newTitle):
+    def updateTitle(self, newTitle: str) -> None:
         self.title = newTitle
         self.updateTimestamp()
 
-    def updateBody(self, newBody):
+    def updateBody(self, newBody: str) -> None:
         self.body = newBody
         self.updateTimestamp()
 
-    def updateTags(self, newTags):
+    def updateTags(self, newTags: list[str]) -> None:
         self.tags = newTags
         self.updateTimestamp()
 
-    def updateTimestamp(self):
+    def updateTimestamp(self) -> None:
         self.updatedAt = datetime.now()
 
 
-    def __str__(self):
+    def __str__(self) -> str:
         return (
             f"Note '{self.title}' "
             f"was last updated on {self.updatedAt}."

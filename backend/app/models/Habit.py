@@ -27,12 +27,12 @@ class Habit:
     # "static" starting value, shouldn't be included in the __init__ as an argument, defaults to None
     habitLog: list = field(init=False, default_factory=list)
 
-    def updateHabitLog(self):
+    def updateHabitLog(self) -> None:
         # depending on implementation logic, today's date can be checked to be contained in frequency
         if not self.habitLog.__contains__(date.today()):
             self.habitLog.append(date.today())
 
-    def evaluateCurrentStreak(self):
+    def evaluateCurrentStreak(self) -> int:
         '''Returns the current streak for this habit.'''
         # Starting from today, the method iterate backwards through days.
         # It only updates the count if the current day is a habit day and appears in habitLog
@@ -54,7 +54,7 @@ class Habit:
 
         return streakCount
     
-    def maxStreak(self):
+    def maxStreak(self) -> int:
         '''Returns the maximum streak for this habit's history.'''
         maxCount=0
         streakCount=0

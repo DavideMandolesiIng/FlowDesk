@@ -23,6 +23,9 @@ htmlcov/
 *.swp
 .DS_Store
 
+# mock db -  json (fase 1)
+backend/data/ 
+
 # Database (fase 2+)
 *.db
 *.sqlite3
