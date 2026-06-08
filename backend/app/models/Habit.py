@@ -25,12 +25,13 @@ class Habit:
     creationDate: date = field(init=False, default_factory=date.today)
 
     # "static" starting value, shouldn't be included in the __init__ as an argument, defaults to None
-    habitLog: list = field(init=False, default_factory=list)
+    habitLog: list[date] = field(init=False, default_factory=list[date])
 
     def updateHabitLog(self) -> None:
         # depending on implementation logic, today's date can be checked to be contained in frequency
-        if not self.habitLog.__contains__(date.today()):
-            self.habitLog.append(date.today())
+        today = date.today()
+        if self.frequency.__contains__(Weekday(today.weekday())) and (not self.habitLog.__contains__(today)):
+            self.habitLog.append(today)
 
     def evaluateCurrentStreak(self) -> int:
         '''Returns the current streak for this habit.'''
@@ -43,7 +44,7 @@ class Habit:
         d=date.today()
 
         while isOnStreak and d >= self.creationDate:
-            if self.frequency.__contains__(d.weekday()):
+            if self.frequency.__contains__(Weekday(d.weekday())):
                 #current day is a habit day
                 if self.habitLog.__contains__(d):
                     streakCount+=1
@@ -60,13 +61,13 @@ class Habit:
         streakCount=0
         d=date.today()
         while d >= self.creationDate:
-            if self.frequency.__contains__(d.weekday()):
+            if self.frequency.__contains__(Weekday(d.weekday())):
                 #current day is a habit day
                 if self.habitLog.__contains__(d):
                     streakCount+=1
                 else:
-                    maxCount=max(streakCount,maxCount)
                     streakCount=0
+            maxCount=max(streakCount,maxCount)
             #go to previous day
             d=d-timedelta(days=1)
 

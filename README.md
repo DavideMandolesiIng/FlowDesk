@@ -67,9 +67,10 @@ The project is designed to be built step by step. Each phase leaves the codebase
 ### Run tests
 
 ```bash
-cd backend
-pytest
+py -m pytest backend/tests
 ```
+or Ctrl + Shift + P -> Tasks: Run Task -> Run Pytest
+(only works if .vscode/tasks.json is configured accordingly)
 
 ### Lint
 

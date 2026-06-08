@@ -32,7 +32,7 @@ class Task:
     creationDate: datetime = field(init=False, default_factory=datetime.now)
 
     # "static" starting value, shouldn't be included in the __init__ as an argument, defaults to None
-    completionDate: Optional[date] = field(init=False, default=None)
+    completionDate: Optional[datetime] = field(init=False, default=None)
     
 
     def updateStatus(self, newStatus: Status) -> None:

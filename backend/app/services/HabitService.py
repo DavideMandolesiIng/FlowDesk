@@ -1,4 +1,4 @@
-from app.models.Habit import Habit
+from app.models.Habit import Habit, Weekday
 from datetime import date
 
 class HabitService:
@@ -6,4 +6,4 @@ class HabitService:
         pass
 
     def findByDate(self, habits: list[Habit], day: date) -> list[Habit]:
-        return [h for h in habits if h.frequency.__contains__(day.weekday())]
+        return [h for h in habits if h.frequency.__contains__(Weekday(day.weekday()))]
