@@ -1,5 +1,5 @@
 from dataclasses import dataclass,field
-from datetime import date,timedelta
+from datetime import date,datetime,timedelta
 from enum import Enum
 
 class Weekday(Enum):
@@ -22,16 +22,16 @@ class Habit:
 
     # Dynamic starting value, shouldn't be included in the __init__ as an agument
     # populated by the default_factory for every class instance
-    creationDate: date = field(init=False, default_factory=date.today)
+    createdAt: datetime = field(init=False, default_factory=datetime.now)
 
     # "static" starting value, shouldn't be included in the __init__ as an argument, defaults to None
-    habitLog: list[date] = field(init=False, default_factory=list[date])
+    habitLog: list[datetime] = field(init=False, default_factory=list[datetime])
 
     def updateHabitLog(self) -> None:
         # depending on implementation logic, today's date can be checked to be contained in frequency
-        today = date.today()
-        if self.frequency.__contains__(Weekday(today.weekday())) and (not self.habitLog.__contains__(today)):
-            self.habitLog.append(today)
+        now = datetime.now()
+        if Weekday(now.weekday()) in self.frequency and not any(log.date() == now.date() for log in self.habitLog):
+            self.habitLog.append(now)
 
     def evaluateCurrentStreak(self) -> int:
         '''Returns the current streak for this habit.'''
@@ -39,36 +39,36 @@ class Habit:
         # It only updates the count if the current day is a habit day and appears in habitLog
         # Cycle (and count) stops at the first habit day missing in the habitLog
 
-        isOnStreak=True
         streakCount=0
-        d=date.today()
+        d=datetime.now()
 
-        while isOnStreak and d >= self.creationDate:
-            if self.frequency.__contains__(Weekday(d.weekday())):
-                #current day is a habit day
-                if self.habitLog.__contains__(d):
-                    streakCount+=1
+        while d >= self.createdAt:
+            if Weekday(d.weekday()) in self.frequency:
+                if any(log.date() == d.date() for log in self.habitLog):
+                    streakCount += 1
                 else:
-                    isOnStreak=False
-            #go to previous day
-            d=d-timedelta(days=1)
+                    break
+
+            d -= timedelta(days=1)
 
         return streakCount
+
     
     def maxStreak(self) -> int:
         '''Returns the maximum streak for this habit's history.'''
-        maxCount=0
-        streakCount=0
-        d=date.today()
-        while d >= self.creationDate:
-            if self.frequency.__contains__(Weekday(d.weekday())):
+        maxCount = 0
+        streakCount = 0
+        d = datetime.now()
+
+        while d >= self.createdAt:
+            if Weekday(d.weekday()) in self.frequency:
                 #current day is a habit day
-                if self.habitLog.__contains__(d):
-                    streakCount+=1
+                if any(log.date() == d.date() for log in self.habitLog):
+                    streakCount += 1
                 else:
                     streakCount=0
             maxCount=max(streakCount,maxCount)
             #go to previous day
-            d=d-timedelta(days=1)
+            d-=timedelta(days=1)
 
         return maxCount

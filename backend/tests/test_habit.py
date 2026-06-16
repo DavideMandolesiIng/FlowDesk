@@ -1,10 +1,10 @@
 import pytest
-from datetime import date,timedelta
+from datetime import date,datetime,timedelta
 from app.models.Habit import Habit, Weekday
 
 def testDefaultValues():
     h = Habit("",[])
-    assert h.creationDate==date.today()
+    assert h.createdAt.date()==date.today()
     assert h.habitLog==[]
 
 def testEmptyLog():
@@ -13,12 +13,11 @@ def testEmptyLog():
     assert len(h.habitLog)==0
 
 def testUpdateLogToday():
-    today = date.today()
+    today = datetime.now()
     h=Habit("",[Weekday(today.weekday())])
-
     h.updateHabitLog()
     
-    assert h.habitLog.__contains__(today)
+    assert any(log.date() == today.date() for log in h.habitLog)
 
 def testUpdateLogTwice():
     today = date.today()
@@ -59,17 +58,17 @@ def testEvaluetMaxStreak():
 
 
 
-def findLastMonday() -> date:
-    d=date.today()
-    while d.weekday()!=Weekday.MON.value:
-        d=d-timedelta(days=1)
+def findLastMonday() -> datetime:
+    d = datetime.now()
+    while d.weekday() != Weekday.MON.value:
+        d -= timedelta(days=1)
     return d
 
 def buildHabitAndLogOnModay() -> Habit:
     '''Builds a Habit last Monday. Log includes starting day'''
     d = findLastMonday()
     h = Habit("",[Weekday.MON])
-    h.creationDate = d
+    h.createdAt = d
     h.habitLog.append(d)
 
     return h
@@ -78,7 +77,7 @@ def buildHabitAndLogTwoMondaysAgo() -> Habit:
     '''Builds a Habit two Mondays ago. Log includes starting day'''
     d = findLastMonday()-timedelta(days=7)#two modays ago
     h = Habit("",[Weekday.MON])
-    h.creationDate = d
+    h.createdAt = d
 
     h.habitLog.append(d)
     

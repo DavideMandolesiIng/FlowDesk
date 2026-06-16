@@ -22,23 +22,23 @@ class Task:
     # class atributes with type hinting included in the constructor __init__ as arguments
     # by the @dataclass decorator  
     title: str
-    dueDate: date
+    dueDate: datetime
     description: str = "No description"
     priority: Priority = Priority.NORMAL
     status: Status = Status.TODO
 
     # Dynamic starting value, shouldn't be included in the __init__ as an agument
     # populated by the default_factory for every class instance
-    creationDate: datetime = field(init=False, default_factory=datetime.now)
+    createdAt: datetime = field(init=False, default_factory=datetime.now)
 
     # "static" starting value, shouldn't be included in the __init__ as an argument, defaults to None
-    completionDate: Optional[datetime] = field(init=False, default=None)
+    completedAt: Optional[datetime] = field(init=False, default=None)
     
 
     def updateStatus(self, newStatus: Status) -> None:
         self.status = newStatus
         if newStatus == Status.COMPLETED:
-            self.completionDate = datetime.now()
+            self.completedAt = datetime.now()
 
     def updatePriority(self, newPriority: Priority) -> None:
         self.priority=newPriority
