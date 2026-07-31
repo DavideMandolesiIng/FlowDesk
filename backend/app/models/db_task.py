@@ -16,4 +16,4 @@ class TaskORM(Base):
     created_at:   Mapped[datetime] = mapped_column(DateTime, default=datetime.now)
     completed_at: Mapped[datetime] = mapped_column(DateTime, nullable=True)
 
-    user: Mapped["UserORM"] = relationship(back_populates="tasks")
+    user: Mapped["UserORM"] = relationship(back_populates="tasks") # type: ignore

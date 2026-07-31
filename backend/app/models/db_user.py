@@ -13,6 +13,6 @@ class UserORM(Base):
     frequency:    Mapped[list[int]] = mapped_column(ARRAY(Integer), default=list)
     created_at:   Mapped[datetime] = mapped_column(DateTime, default=datetime.now())
 
-    tasks:  Mapped[list["TaskORM"]]  = relationship(back_populates="user", cascade="all, delete-orphan")
-    notes:  Mapped[list["NoteORM"]]  = relationship(back_populates="user", cascade="all, delete-orphan")
-    habits: Mapped[list["HabitORM"]] = relationship(back_populates="user", cascade="all, delete-orphan")
+    tasks:  Mapped[list["TaskORM"]]  = relationship(back_populates="user", cascade="all, delete-orphan") # type: ignore
+    notes:  Mapped[list["NoteORM"]]  = relationship(back_populates="user", cascade="all, delete-orphan") # type: ignore
+    habits: Mapped[list["HabitORM"]] = relationship(back_populates="user", cascade="all, delete-orphan") # type: ignore

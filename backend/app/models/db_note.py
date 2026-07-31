@@ -12,4 +12,4 @@ class NoteORM(Base):
     body:         Mapped[str]      = mapped_column(Text, default="")
     created_at:   Mapped[datetime] = mapped_column(DateTime, default=datetime.now)
     updated_at:   Mapped[datetime] = mapped_column(DateTime, default=datetime.now)
-    user: Mapped["UserORM"] = relationship(back_populates="notes")
+    user: Mapped["UserORM"] = relationship(back_populates="notes") # type: ignore

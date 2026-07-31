@@ -13,4 +13,4 @@ class HabitORM(Base):
     frequency:    Mapped[list[int]] = mapped_column(ARRAY(Integer), default=list)
     completed_at: Mapped[datetime] = mapped_column(DateTime, nullable=True)
 
-    user: Mapped["UserORM"] = relationship(back_populates="habits")
+    user: Mapped["UserORM"] = relationship(back_populates="habits") # type: ignore
